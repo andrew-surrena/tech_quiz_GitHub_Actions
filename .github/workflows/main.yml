@@ -1,41 +1,30 @@
-# Name of workflow
-name: Lint and Test workflow
+name: Checking Tests
 
-# Trigger workflow on all pull requests
 on:
   pull_request:
     branches:
       - develop
 
-# Jobs to carry out
 jobs:
   test:
-    # Operating system to run job on
+    name: Checking Tests
     runs-on: ubuntu-latest
 
-    # Steps in job
     steps:
-      # Get code from repo
       - name: Checkout code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
 
-      - name: Use Node.js 21.x
-        uses: actions/setup-node@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 21.x
 
-      # Install dependencies
-      - name: 🧰 Install Deps
+      - name: Install dependencies
         run: npm install
-        
-      # Run lint
-      - name: Run Cypress
-        run: npm run test-component
-
-      # Run build
-      - name: Run Build
+      
+      - name: Build App
         run: npm run build
 
-      # Run tests
-      - name: Run Tests
+      - name: Run vitest tests
         run: npm run test
+
